@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { GlobalservicesService } from './globalservices.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,7 +12,7 @@ export class AppComponent {
   //Loader variable default true before page load
   loader = true;
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder, private userauth : GlobalservicesService) { }
   //Form Validables 
   registerForm:any =  FormGroup;
   submitted = false;
@@ -28,7 +29,13 @@ export class AppComponent {
     //True if all the fields are filled
     if(this.submitted)
     {
-      alert("Great!!");
+      //alert("Great!!");
+      // Initialize Params Object
+      var myFormData = new FormData();
+      // Begin assigning parameters
+      myFormData.append('email', this.registerForm.value.email);
+      myFormData.append('password', this.registerForm.value.password);
+      this.userauth.userlogin(myFormData); //caaling add user 
     }
   
   }
